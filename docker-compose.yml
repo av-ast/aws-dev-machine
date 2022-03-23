@@ -1,0 +1,21 @@
+x-aws-vault-environment: &aws-vault-environment
+  - AWS_VAULT
+  - AWS_ACCESS_KEY_ID
+  - AWS_SECRET_ACCESS_KEY
+  - AWS_SESSION_TOKEN
+  - AWS_SECURITY_TOKEN
+  - AWS_SESSION_EXPIRATION
+  - AWS_SESSION_TOKEN_TTL=24h
+  - AWS_CHAINED_SESSION_TOKEN_TTL=24h
+  - AWS_ASSUME_ROLE_TTL=24h
+
+services:
+  infra:
+    build: .
+    volumes:
+      - .:/infra
+      - ~/.ssh:/root/.ssh
+    environment: *aws-vault-environment
+    dns:
+      - 8.8.8.8
+      - 1.0.0.1
